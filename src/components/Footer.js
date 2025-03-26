@@ -4,18 +4,15 @@ const Footer = ({ onReset, isGameOver, isGameWon }) => {
   return (
     <footer className="footer">
       {isGameOver && (
-        <button 
-          className="game-button play-again-button" 
-          onClick={onReset}
-        >
+        <button className="btn" onClick={onReset}>
           Play Again
         </button>
       )}
       <p>
-        Emoji Connections is a game where you group emojis with common connections.
+        Group emojis into categories to solve the puzzle!
       </p>
       <p>
-        &copy; {new Date().getFullYear()} Emoji Connections
+        <small>&copy; {new Date().getFullYear()} Emoji Connections</small>
       </p>
     </footer>
   );
