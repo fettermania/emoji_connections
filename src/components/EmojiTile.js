@@ -1,11 +1,18 @@
 import React from 'react';
 
-const EmojiTile = ({ emoji, isSelected, isSolved, colorClass, onClick }) => {
-  // Build class name based on the tile's state
-  const tileClassName = `emoji-tile ${isSelected ? 'selected' : ''} ${isSolved ? 'solved ' + colorClass : ''}`;
-
+const EmojiTile = ({ emoji, isSelected, solvedGroupClass, onClick }) => {
+  const isSolved = solvedGroupClass !== '';
+  
+  // Build class names
+  let className = 'emoji-tile';
+  if (isSelected) className += ' selected';
+  if (isSolved) className += ' solved ' + solvedGroupClass;
+  
   return (
-    <div className={tileClassName} onClick={onClick}>
+    <div 
+      className={className}
+      onClick={isSolved ? null : onClick}
+    >
       {emoji}
     </div>
   );
