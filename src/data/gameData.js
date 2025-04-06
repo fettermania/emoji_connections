@@ -1,3 +1,5 @@
+import { generatePuzzle } from '../utils/emojiUtils';
+
 // Game data with emoji groups
 const puzzles = [
   {
@@ -117,11 +119,34 @@ const shuffleArray = (array) => {
   return newArray;
 };
 
+// Function to generate a dynamic puzzle
+const createDynamicPuzzle = () => {
+  try {
+    // Use our emoji mapping to create a new puzzle
+    const dynamicGroups = generatePuzzle();
+    return {
+      id: Date.now(), // Use timestamp as ID
+      groups: dynamicGroups
+    };
+  } catch (error) {
+    console.error("Error generating dynamic puzzle:", error);
+    // Fall back to a predefined puzzle
+    return puzzles[0];
+  }
+};
+
 // Function to get a random puzzle and shuffle emojis
 export const getGameData = () => {
-  // Select random puzzle
-  const randomIndex = Math.floor(Math.random() * puzzles.length);
-  const puzzle = JSON.parse(JSON.stringify(puzzles[randomIndex]));
+  let puzzle;
+  
+  // 30% chance to generate a dynamic puzzle, 70% to use predefined
+  if (Math.random() < 0.3) {
+    puzzle = createDynamicPuzzle();
+  } else {
+    // Select random puzzle from predefined ones
+    const randomIndex = Math.floor(Math.random() * puzzles.length);
+    puzzle = JSON.parse(JSON.stringify(puzzles[randomIndex]));
+  }
   
   // Create a flat array of all emojis
   const allEmojis = puzzle.groups.flatMap(group => group.emojis);
